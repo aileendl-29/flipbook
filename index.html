@@ -26,16 +26,27 @@ body {
   justify-content: center;
 }
 
+/* --- THIS IS THE CRITICAL FIX ---
+  You MUST give the flipbook a size in CSS that
+  matches the size in your JavaScript.
+*/
+#flipbook {
+  width: 900px;
+  height: 600px;
+}
+
 /* This makes the image fill its page */
 #flipbook img {
   width: 100%;
   height: 100%;
 }
 
-/* This gives your new blank covers a white background */
-#flipbook > div:not(:has(img)) {
+/* This gives your new blank covers a white background (replaces the :has() rule) */
+#flipbook > div:first-child,
+#flipbook > div:last-child {
   background: #fff;
 }
+
 
 /* Fullscreen Button (optional on website) */
 #fullscreen-btn {
@@ -53,13 +64,21 @@ body {
 }
 
 /* Mobile optimization */
-@media (max-width: 768px) {
+@media (max-width: 920px) {
+  /* On mobile, we make the wrapper 100% */
   #flipbook-wrapper {
     max-width: 100%;
     padding: 0 10px;
   }
+
+  /* And we scale the book down to fit the screen.
+    The height will adjust automatically.
+  */
   #flipbook {
-    max-width: 100%;
+    width: 100%;
+    height: auto;
+    /* We re-add the aspect ratio for mobile */
+    aspect-ratio: 3 / 2; 
   }
 }
 </style>
@@ -69,14 +88,14 @@ body {
 <body>
 
 <div id="flipbook-wrapper">
-<div id="flipbook">
-  <div></div> <div class="double"><img src="page_1.jpg"></div>
-  <div class="double"><img src="page_2.jpg"></div>
-  <div class="double"><img src="page_3.jpg"></div>
-  <div class="double"><img src="page_4.jpg"></div>
-  <div class="double"><img src="page_5.jpg"></div>
+  <div id="flipbook">
+    <div></div> <div class="double"><img src="page_1.jpg"></div>
+    <div class="double"><img src="page_2.jpg"></div>
+    <div class="double"><img src="page_3.jpg"></div>
+    <div class="double"><img src="page_4.jpg"></div>
+    <div class="double"><img src="page_5.jpg"></div>
 
-  <div></div> </div>
+    <div></div> </div>
 </div>
 
 <button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
@@ -84,7 +103,7 @@ body {
 <script>
 $(document).ready(function() {
 
-  // Initialize page flip
+  // This script initializes the flipbook
   $('#flipbook').turn({
     width: 900,
     height: 600,
@@ -95,15 +114,26 @@ $(document).ready(function() {
     duration: 800
   });
 
-  // 
-  // --- ZOOM SCRIPT REMOVED ---
-  // The 'Zoom on click' script that was here was
-  // conflicting with turn.js's click event and has been removed.
-  //
+  /* This handles responsiveness. 
+    When the window resizes, it checks if it's a mobile
+    size and adjusts the book's properties.
+  */
+  $(window).on('resize', function() {
+    // Get the new width of the wrapper
+    var wrapperWidth = $('#flipbook-wrapper').width();
+    
+    if (wrapperWidth < 900) {
+      // If screen is small, set book size to wrapper width
+      $('#flipbook').turn('size', wrapperWidth, wrapperWidth / 1.5); // 1.5 is 3:2 ratio
+    } else {
+      // Otherwise, set it back to default
+      $('#flipbook').turn('size', 900, 600);
+    }
+  }).trigger('resize'); // Run once on page load
 
 });
 
-// Fullscreen toggle
+// Fullscreen toggle function
 function toggleFullscreen() {
   const elem = document.getElementById("flipbook");
   if (!document.fullscreenElement) {
