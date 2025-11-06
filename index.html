@@ -11,18 +11,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 
 <style>
-body { 
-  margin: 0; 
-  background: #eaeaea; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  height: 100vh; 
+body {
+  margin: 0;
+  background: #ffffff; /* white background to blend with website */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 0;
+}
+
+#flipbook-wrapper {
+  width: 100%;
+  max-width: 1000px; /* ✅ controls size inside website */
+  margin: auto;
+  display: flex;
+  justify-content: center;
 }
 
 #flipbook {
-  width: 90vw;
-  height: 90vh;
+  width: 100%;
+  height: auto;
+  max-width: 900px;
+  aspect-ratio: 3 / 2; /* maintains book shape */
 }
 
 #flipbook img {
@@ -31,21 +41,33 @@ body {
   object-fit: contain;
 }
 
-/* Fullscreen Button */
+/* Fullscreen Button (optional on website) */
 #fullscreen-btn {
   position: fixed;
-  bottom: 20px; 
+  bottom: 20px;
   right: 20px;
-  padding: 10px 18px; 
-  border-radius: 6px; 
-  border: none; 
-  background: #111; 
-  color: #fff; 
-  cursor: pointer; 
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
   font-size: 14px;
   z-index: 9999;
 }
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  #flipbook-wrapper {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  #flipbook {
+    max-width: 100%;
+  }
+}
 </style>
+
 </head>
 
 <body>
