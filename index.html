@@ -1,62 +1,99 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>Flipbook</title>
+
+<!-- jQuery (required for Turn.js) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Turn.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+
 <style>
-body { margin: 0; background: #eaeaea; display: flex; justify-content: center; align-items: center; height: 100vh; }
-#flipbook { width: 90vw; height: 90vh; }
-#flipbook img { width: 100%; height: 100%; object-fit: contain; }
+body { 
+  margin: 0; 
+  background: #eaeaea; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+}
+
+#flipbook {
+  width: 90vw;
+  height: 90vh;
+}
+
+#flipbook img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Fullscreen Button */
+#fullscreen-btn {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px;
+  padding: 10px 18px; 
+  border-radius: 6px; 
+  border: none; 
+  background: #111; 
+  color: #fff; 
+  cursor: pointer; 
+  font-size: 14px;
+  z-index: 9999;
+}
 </style>
 </head>
+
 <body>
+
 <div id="flipbook">
-<div><img src="page_1.jpg"></div>
-<div><img src="page_2.jpg"></div>
-<div><img src="page_3.jpg"></div>
-<div><img src="page_4.jpg"></div>
-<div><img src="page_5.jpg"></div>
-
+  <div><img src="page_1.jpg"></div>
+  <div><img src="page_2.jpg"></div>
+  <div><img src="page_3.jpg"></div>
+  <div><img src="page_4.jpg"></div>
+  <div><img src="page_5.jpg"></div>
 </div>
-<script>
-<script>
-const flipbook = document.getElementById("flipbook");
 
-// Initialize realistic flipbook
-$(flipbook).turn({
-  width: 900,
-  height: 600,
-  autoCenter: true,
-  elevation: 50,
-  gradients: true,    
-  duration: 800
+<button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
+
+<script>
+$(document).ready(function() {
+
+  // Initialize page flip
+  $('#flipbook').turn({
+    width: 900,
+    height: 600,
+    autoCenter: true,
+    display: 'double',   // ✅ Real 2-page spread
+    elevation: 50,
+    gradients: true,
+    duration: 800
+  });
+
+  // Zoom on click
+  let zoomed = false;
+  $('#flipbook').on('click', function() {
+    zoomed = !zoomed;
+    $(this).css('transform', zoomed ? 'scale(1.8)' : 'scale(1)');
+    $(this).css('transition', 'transform 0.3s ease');
+  });
+
 });
 
-// Zoom on click
-let zoomed = false;
-flipbook.addEventListener("click", () => {
-  zoomed = !zoomed;
-  flipbook.style.transform = zoomed ? "scale(1.8)" : "scale(1)";
-  flipbook.style.transition = "transform 0.3s ease";
-});
-
-// Fullscreen button
+// Fullscreen toggle
 function toggleFullscreen() {
+  const elem = document.getElementById("flipbook");
   if (!document.fullscreenElement) {
-    flipbook.requestFullscreen();
+    elem.requestFullscreen();
   } else {
     document.exitFullscreen();
   }
 }
 </script>
-
-</script>
-  <button onclick="toggleFullscreen()" 
-style="position:fixed; bottom:20px; right:20px; padding:10px 18px; border-radius:6px; border:none; background:#111; color:#fff; cursor:pointer; font-size:14px;">
-Fullscreen
-</button>
 
 </body>
 </html>
