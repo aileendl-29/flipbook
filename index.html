@@ -103,4 +103,83 @@ body {
   }
  
   #prev-btn { left: 15px; }
-  #next-btn { right:
+  #next-btn { right: 15px; }
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="flipbook-wrapper">
+
+  <button id="prev-btn">&lt;</button>
+
+  <div id="flipbook">
+    <div class="double"><img src="page_1.jpg"></div>
+    <div class="double"><img src="page_2.jpg"></div>
+    <div class="double"><img src="page_3.jpg"></div>
+    
+    <div class="double"><img src="image4FIX.png"></div> 
+    
+    <div class="double"><img src="page_5.jpg"></div>
+  </div>
+
+  <button id="next-btn">&gt;</button>
+
+</div>
+
+<button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
+
+<script>
+$(document).ready(function() {
+
+  $('#flipbook').turn({
+    /* --- SIZE CHANGE 3 --- */
+    width: 1200,
+    height: 800,
+    autoCenter: true,
+    display: 'double',
+    elevation: 50,
+    gradients: true,
+    duration: 800
+  });
+
+  /* Responsiveness */
+  $(window).on('resize', function() {
+    var wrapperWidth = $('#flipbook-wrapper').width();
+   
+    /* --- SIZE CHANGE 4 --- */
+    if (wrapperWidth < 1200) {
+      $('#flipbook').turn('size', wrapperWidth, wrapperWidth / 1.5); // 1.5 is 3:2 ratio
+    } else {
+      $('#flipbook').turn('size', 1200, 800);
+    }
+  }).trigger('resize');
+ 
+ 
+  /* Click handler for the 'Next' button */
+  $('#next-btn').on('click', function() {
+    $('#flipbook').turn('next');
+  });
+
+  /* Click handler for the 'Previous' button */
+  $('#prev-btn').on('click', function() {
+    $('#flipbook').turn('previous');
+  });
+
+});
+
+// Fullscreen function
+function toggleFullscreen() {
+  const elem = document.getElementById("flipbook");
+  if (!document.fullscreenElement) {
+    elem.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+</script>
+
+</body>
+</html>
