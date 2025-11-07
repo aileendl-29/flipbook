@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Intake360 Brochure</title>
+<title>Flipbook</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -21,8 +21,7 @@ body {
 
 #flipbook-wrapper {
   width: 100%;
-  /* Make the max-width larger to hold the new book */
-  max-width: 1600px; /* Increased from 1300px */
+  max-width: 1600px;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -31,7 +30,6 @@ body {
 }
 
 #flipbook {
-  /* --- SIZE CHANGE 1 --- */
   width: 1500px;
   height: 1000px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
@@ -74,24 +72,11 @@ body {
   right: 30px; 
 }
 
-/* Fullscreen Button */
-#fullscreen-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px 18px;
-  z-index: 9999; 
-  border-radius: 6px;
-  border: none;
-  background: #111;
-  color: #fff;
-  cursor: pointer;
-  font-size: 14px;
-}
+/* --- FULLSCREEN BUTTON CSS (REMOVED) --- */
+
 
 /* Mobile optimization */
-/* --- SIZE CHANGE 2 --- */
-@media (max-width: 1520px) { /* Updated from 1220px */
+@media (max-width: 1520px) {
   #flipbook-wrapper {
     max-width: 100%;
     padding: 0 10px;
@@ -99,7 +84,7 @@ body {
   #flipbook {
     width: 100%;
     height: auto;
-    aspect-ratio: 3 / 2; /* 1500 / 1000 = 3 / 2 */
+    aspect-ratio: 3 / 2;
   }
  
   #prev-btn { left: 15px; }
@@ -126,13 +111,10 @@ body {
 
 </div>
 
-<button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
-
 <script>
 $(document).ready(function() {
 
   $('#flipbook').turn({
-    /* --- SIZE CHANGE 3 --- */
     width: 1500,
     height: 1000,
     autoCenter: true,
@@ -146,9 +128,8 @@ $(document).ready(function() {
   $(window).on('resize', function() {
     var wrapperWidth = $('#flipbook-wrapper').width();
    
-    /* --- SIZE CHANGE 4 --- */
     if (wrapperWidth < 1500) {
-      $('#flipbook').turn('size', wrapperWidth, wrapperWidth / 1.5); // 1.5 is 3:2 ratio
+      $('#flipbook').turn('size', wrapperWidth, wrapperWidth / 1.5);
     } else {
       $('#flipbook').turn('size', 1500, 1000);
     }
@@ -167,15 +148,8 @@ $(document).ready(function() {
 
 });
 
-// Fullscreen function
-function toggleFullscreen() {
-  const elem = document.getElementById("flipbook");
-  if (!document.fullscreenElement) {
-    elem.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
-}
+/* --- FULLSCREEN JAVASCRIPT (REMOVED) --- */
+
 </script>
 
 </body>
