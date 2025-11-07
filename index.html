@@ -40,46 +40,42 @@ body {
   height: 100%;
 }
 
-/* --- UPDATED ARROW STYLES --- */
+/* --- STYLE UPDATE 1: Button Size --- */
+/* This is the style for the arrow buttons */
 .flipbook-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 1000; 
-  
-  /* New Branding Blue */
-  background: #50a7dd; 
   color: #fff;
   border: none;
   border-radius: 50%;
-  
-  /* Made them Bigger (60px instead of 40px) */
-  width: 60px;
-  height: 60px;
-  font-size: 30px; /* Bigger arrow icon */
-  line-height: 60px;
-  
   cursor: pointer;
   text-align: center;
-  opacity: 0.8; /* Slight transparency so they aren't too distracting */
-  transition: all 0.2s ease; /* Smooth color change */
+  opacity: 0.8; /* Updated opacity */
+  transition: opacity 0.2s;
+  
+  /* Size changes */
+  width: 50px;   /* Was 40px */
+  height: 50px;  /* Was 40px */
+  font-size: 28px; /* Was 20px */
+  line-height: 50px; /* Was 40px */
 }
 
 .flipbook-btn:hover {
-  /* New Branding Orange on Hover */
-  background: #ffaa2b;
   opacity: 1;
-  transform: translateY(-50%) scale(1.1); /* Slight grow effect on hover */
 }
 
+/* --- STYLE UPDATE 2: Button Colors --- */
 #prev-btn {
   left: 30px; 
+  background: #ffaa2b; /* Your orange color */
 }
 
 #next-btn {
   right: 30px; 
+  background: #50a7dd; /* Your blue color */
 }
-/* --- END OF UPDATED ARROW STYLES --- */
 
 
 /* Mobile optimization */
@@ -105,7 +101,7 @@ body {
 
 <div id="flipbook-wrapper">
 
-  <button id="prev-btn" class="flipbook-btn">&lt;</button>
+  <button id="prev-btn">&lt;</button>
 
   <div id="flipbook">
     <div class="double"><img src="page_1.jpg"></div>
@@ -114,7 +110,7 @@ body {
     <div class="double"><img src="Image4FIX.png"></div> 
   </div>
 
-  <button id="next-btn" class="flipbook-btn">&gt;</button>
+  <button id="next-btn">&gt;</button>
 
 </div>
 
