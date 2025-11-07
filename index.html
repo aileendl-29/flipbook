@@ -9,11 +9,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
 
 <style>
-/* --- THIS IS THE FIX --- */
-/* 1. The background is now light GREY so you can see the book */
+/* 1. The background is light GREY */
 body {
   margin: 0;
-  background: #f0f0f0; /* WAS: #ffffff */
+  background: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -26,28 +25,64 @@ body {
   margin: auto;
   display: flex;
   justify-content: center;
+  align-items: center; /* This helps center the buttons */
+  
+  /* --- NEW CSS (Part 1) --- */
+  /* This is needed to position the arrows */
+  position: relative; 
 }
 
 #flipbook {
   width: 900px;
   height: 600px;
-  
-  /* 2. This adds a SHADOW so the book looks real */
+  /* 2. This adds a SHADOW */
   box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
 }
-/* --- END OF FIX --- */
 
-/* This makes the image fill its page */
 #flipbook img {
   width: 100%;
   height: 100%;
 }
 
-/* This gives your new blank covers a white background */
 #flipbook > div:first-child,
 #flipbook > div:last-child {
   background: #fff;
 }
+
+
+/* --- NEW CSS (Part 2) --- */
+/* This is the new style for the arrow buttons */
+.flipbook-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000; /* Makes sure they are on top of the book */
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 40px;
+  text-align: center;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.flipbook-btn:hover {
+  opacity: 1;
+}
+
+#prev-btn {
+  left: 30px; /* Position on the left */
+}
+
+#next-btn {
+  right: 30px; /* Position on the right */
+}
+/* --- END OF NEW CSS --- */
 
 
 /* Fullscreen Button */
@@ -56,13 +91,14 @@ body {
   bottom: 20px;
   right: 20px;
   padding: 10px 18px;
+  z-index: 9999; /* Kept high z-index */
+  /* ... other styles ... */
   border-radius: 6px;
   border: none;
   background: #111;
   color: #fff;
   cursor: pointer;
   font-size: 14px;
-  z-index: 9999;
 }
 
 /* Mobile optimization */
@@ -76,6 +112,10 @@ body {
     height: auto;
     aspect-ratio: 3 / 2; 
   }
+  
+  /* Move arrows on mobile */
+  #prev-btn { left: 15px; }
+  #next-btn { right: 15px; }
 }
 </style>
 
@@ -84,14 +124,19 @@ body {
 <body>
 
 <div id="flipbook-wrapper">
+
+  <button id="prev-btn">&lt;</button>
+
   <div id="flipbook">
     <div></div> <div class="double"><img src="page_1.jpg"></div>
     <div class="double"><img src="page_2.jpg"></div>
     <div class="double"><img src="page_3.jpg"></div>
     <div class="double"><img src="page_4.jpg"></div>
     <div class="double"><img src="page_5.jpg"></div>
-
     <div></div> </div>
+
+  <button id="next-btn">&gt;</button>
+
 </div>
 
 <button id="fullscreen-btn" onclick="toggleFullscreen()">Fullscreen</button>
@@ -118,6 +163,19 @@ $(document).ready(function() {
       $('#flipbook').turn('size', 900, 600);
     }
   }).trigger('resize');
+  
+  
+  /* --- NEW JAVASCRIPT --- */
+  // Click handler for the 'Next' button
+  $('#next-btn').on('click', function() {
+    $('#flipbook').turn('next');
+  });
+
+  // Click handler for the 'Previous' button
+  $('#prev-btn').on('click', function() {
+    $('#flipbook').turn('previous');
+  });
+  /* --- END OF NEW JAVASCRIPT --- */
 
 });
 
