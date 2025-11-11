@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <title>Flipbook</title>
 
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
 
 <style>
@@ -16,8 +17,6 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 40px 0;
-  /* Added font-family for the arrows */
-  font-family: Arial, sans-serif;
 }
 
 #flipbook-wrapper {
@@ -36,24 +35,13 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
 }
 
-/* This targets the page divs that turn.js CREATES */
-#flipbook .page {
-    background-color: white; /* Added a white background for loading */
-}
-
 #flipbook img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures image covers the div */
 }
-
-/* Style for hard covers */
-#flipbook .hard {
-    background: #ccc !important; /* Example hard cover color */
-}
-
 
 /* --- STYLE UPDATE 1: Button Size --- */
+/* This is the style for the arrow buttons */
 .flipbook-btn {
   position: absolute;
   top: 50%;
@@ -66,12 +54,12 @@ body {
   text-align: center;
   opacity: 0.8; /* Updated opacity */
   transition: opacity 0.2s;
- 
+  
   /* Size changes */
-  width: 50px;
-  height: 50px;
-  font-size: 28px;
-  line-height: 50px; /* Vertically centers the arrow */
+  width: 50px;   /* Was 40px */
+  height: 50px;  /* Was 40px */
+  font-size: 28px; /* Was 20px */
+  line-height: 50px; /* Was 40px */
 }
 
 .flipbook-btn:hover {
@@ -99,6 +87,7 @@ body {
   #flipbook {
     width: 100%;
     height: auto;
+    aspect-ratio: 3 / 2;
   }
  
   #prev-btn { left: 15px; }
@@ -115,15 +104,10 @@ body {
   <button id="prev-btn">&lt;</button>
 
   <div id="flipbook">
-    
-    <div class="hard"><img src="image_f76a41.jpg"></div>
-    
-    <div><img src="YOUR_SECOND_PAGE_FILENAME.jpg"></div>
-    
-    <div><img src="YOUR_THIRD_PAGE_FILENAME.jpg"></div> 
-    
-    <div class="hard"><img src="YOUR_FOURTH_PAGE_FILENAME.jpg"></div> 
-  
+    <div class="double"><img src="page_1.jpg"></div>
+    <div class="double"><img src="page_2.jpg"></div>
+    <div class="double"><img src="Image3FIX.jpg"></div>
+    <div class="double"><img src="Image4FIX.png"></div> 
   </div>
 
   <button id="next-btn">&gt;</button>
@@ -146,31 +130,22 @@ $(document).ready(function() {
   /* Responsiveness */
   $(window).on('resize', function() {
     var wrapperWidth = $('#flipbook-wrapper').width();
-    var newHeight;
-
+   
     if (wrapperWidth < 1500) {
-      newHeight = wrapperWidth / 1.5; /* 1.5 is 1500/1000 ratio */
-      $('#flipbook').turn('size', wrapperWidth, newHeight);
+      $('#flipbook').turn('size', wrapperWidth, wrapperWidth / 1.5);
     } else {
-      newHeight = 1000;
-      $('#flipbook').turn('size', 1500, newHeight);
+      $('#flipbook').turn('size', 1500, 1000);
     }
-    
-    /* Recenter the book */
-    $('#flipbook').turn('center');
-    
   }).trigger('resize');
  
  
   /* Click handler for the 'Next' button */
-  $('#next-btn').on('click', function(e) {
-    e.preventDefault(); // Good practice to prevent default button action
+  $('#next-btn').on('click', function() {
     $('#flipbook').turn('next');
   });
 
   /* Click handler for the 'Previous' button */
-  $('#prev-btn').on('click', function(e) {
-    e.preventDefault();
+  $('#prev-btn').on('click', function() {
     $('#flipbook').turn('previous');
   });
 
