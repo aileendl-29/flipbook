@@ -99,8 +99,6 @@ body {
   #flipbook {
     width: 100%;
     height: auto;
-    /* aspect-ratio is modern CSS, 1.5 is safer for old jQuery env */
-    /* aspect-ratio: 3 / 2; */
   }
  
   #prev-btn { left: 15px; }
@@ -111,15 +109,21 @@ body {
 </head>
 
 <body>
+
 <div id="flipbook-wrapper">
 
   <button id="prev-btn">&lt;</button>
 
   <div id="flipbook">
-    <div class="hard"><img src="page_1.jpg"></div>
-    <div><img src="page_2.jpg"></div>
-    <div><img src="Image3FIX.jpg"></div>
-    <div class="hard"><img src="Image4FIX.png"></div> 
+    
+    <div class="hard"><img src="image_f76a41.jpg"></div>
+    
+    <div><img src="YOUR_SECOND_PAGE_FILENAME.jpg"></div>
+    
+    <div><img src="YOUR_THIRD_PAGE_FILENAME.jpg"></div> 
+    
+    <div class="hard"><img src="YOUR_FOURTH_PAGE_FILENAME.jpg"></div> 
+  
   </div>
 
   <button id="next-btn">&gt;</button>
